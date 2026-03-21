@@ -19,9 +19,8 @@ export function SimulatorPage() {
 					<p className="eyebrow">4th Down Simulator</p>
 					<h1>Test the decision, not the convention.</h1>
 					<p>
-						This first-pass model uses transparent assumptions to show why teams
-						are often more conservative than the underlying decision math
-						suggests.
+						This version uses a dense cfb4th-backed decision surface so the
+						recommendations track a much stronger benchmark while keeping the UI easy to use.
 					</p>
 				</div>
 
@@ -133,8 +132,8 @@ export function SimulatorPage() {
 								</strong>
 							</div>
 							<div>
-								<span>Best expected value</span>
-								<strong>{summary.bestExpectedValue.toFixed(2)} points</strong>
+								<span>Best win probability</span>
+								<strong>{Math.round(summary.bestWinProbability * 100)}%</strong>
 							</div>
 							<div>
 								<span>Estimated conversion rate</span>
@@ -144,21 +143,20 @@ export function SimulatorPage() {
 						<div className="option-table" aria-label="Decision summary">
 							<div>
 								<span>Go for it</span>
-								<strong>{summary.goForIt.expectedValue.toFixed(2)}</strong>
+								<strong>{Math.round((summary.goForIt.winProbability ?? 0) * 100)}%</strong>
 							</div>
 							<div>
 								<span>Punt</span>
-								<strong>{summary.punt.expectedValue.toFixed(2)}</strong>
+								<strong>{Math.round((summary.punt.winProbability ?? 0) * 100)}%</strong>
 							</div>
 							<div>
 								<span>Field goal</span>
-								<strong>{summary.fieldGoal.expectedValue.toFixed(2)}</strong>
+								<strong>{Math.round((summary.fieldGoal.winProbability ?? 0) * 100)}%</strong>
 							</div>
 						</div>
 						<p className="simulator-note">
-							The model uses transparent expected-points assumptions, distance
-							lookups, and only light late-game adjustments so the recommendation
-							stays easy to inspect.
+							The model now uses a dense cfb4th-backed benchmark surface and presents
+							win-probability comparisons directly so the recommendation stays easier to trust and inspect.
 						</p>
 					</div>
 				</div>
