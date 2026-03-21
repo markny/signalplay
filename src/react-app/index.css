@@ -362,8 +362,28 @@ select {
 	gap: 2rem;
 }
 
+.simulator-layout--embed {
+	gap: 1.5rem;
+}
+
 .simulator-heading {
 	margin-bottom: 0;
+}
+
+.simulator-embed-card {
+	border: 1px solid var(--border);
+	border-radius: 24px;
+	overflow: hidden;
+	background: rgba(18, 30, 39, 0.84);
+	box-shadow: var(--shadow);
+}
+
+.simulator-embed {
+	display: block;
+	width: 100%;
+	min-height: 1500px;
+	border: 0;
+	background: transparent;
 }
 
 .simulator-grid {

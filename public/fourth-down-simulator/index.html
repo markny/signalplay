@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fourth Down Simulator | SignalPlay</title>
+  <meta name="description" content="Fourth down decision simulator for SignalPlay.">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main>
+    <section class="page-hero">
+      <div class="shell page-grid">
+        <div class="page-hero__content">
+          <p class="eyebrow">SignalPlay simulator</p>
+          <h1>Fourth Down Simulator</h1>
+          <p class="page-intro">
+            Compare the win probabilities of going for it, punting, or attempting a field goal with the current SignalPlay fourth-down simulator.
+          </p>
+        </div>
+        <aside class="panel">
+          <p class="panel__label eyebrow">About this version</p>
+          <p>
+            This version is built for fast testing: cleaner controls, clearer win-probability output, and the same decision logic used in the current simulator pass.
+          </p>
+          <p class="muted">
+            Yard line uses a 1–99 scale from your own goal line: 1 = own 1, 50 = midfield, 58 = opponent 42, 99 = opponent 1.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell tool-layout tool-layout--simulator">
+        <section class="form-panel simulator-panel">
+          <div class="simulator-panel__header">
+            <div>
+              <p class="eyebrow">Scenario input</p>
+              <h2>Set the situation</h2>
+            </div>
+            <div class="view-toggle" role="tablist" aria-label="Input detail level">
+              <button type="button" class="view-toggle__button is-active" data-mode-button="simple" aria-pressed="true">Simple</button>
+              <button type="button" class="view-toggle__button" data-mode-button="advanced" aria-pressed="false">Advanced</button>
+            </div>
+          </div>
+          <form id="fourth-down-form">
+            <div class="field field--full field--slider">
+              <div class="field__topline">
+                <label for="yardLine">Yard line</label>
+                <div class="yardline-display yardline-display--single"><span id="yardLineDisplay">Opponent 42</span></div>
+              </div>
+              <input id="yardLine" name="yardLine" type="range" min="1" max="99" value="58" step="1">
+              <div class="slider-scale" aria-hidden="true"><span>Own 1</span><span>Midfield</span><span>Opp 1</span></div>
+            </div>
+            <div class="form-grid form-grid--simulator">
+              <div class="field field--slider compact-slider-field">
+                <div class="field__topline"><label for="yardsToGo">Yards to go</label><strong class="slider-value" id="yardsToGoValue">4</strong></div>
+                <input id="yardsToGo" name="yardsToGo" type="range" min="1" max="15" value="4" step="1">
+                <div class="slider-scale slider-scale--compact" aria-hidden="true"><span>1</span><span>8</span><span>15</span></div>
+              </div>
+              <div class="field field--segmented">
+                <label>Quarter</label>
+                <div class="segmented-control" role="radiogroup" aria-label="Quarter">
+                  <input type="radio" name="quarter" id="quarter1" value="1"><label for="quarter1">1st</label>
+                  <input type="radio" name="quarter" id="quarter2" value="2"><label for="quarter2">2nd</label>
+                  <input type="radio" name="quarter" id="quarter3" value="3"><label for="quarter3">3rd</label>
+                  <input type="radio" name="quarter" id="quarter4" value="4" checked><label for="quarter4">4th</label>
+                </div>
+              </div>
+              <div class="field">
+                <label for="timeRemaining">Time remaining</label>
+                <input id="timeRemaining" name="timeRemaining" type="text" value="08:42" pattern="[0-9]{1,2}:[0-9]{2}">
+              </div>
+              <div class="field field--slider compact-slider-field">
+                <div class="field__topline"><label for="scoreDifferential">Score differential</label><strong class="slider-value" id="scoreDifferentialValue">Down 3</strong></div>
+                <input id="scoreDifferential" name="scoreDifferential" type="range" min="-21" max="21" value="-3" step="1">
+                <div class="slider-scale slider-scale--compact" aria-hidden="true"><span>-21</span><span>0</span><span>+21</span></div>
+              </div>
+            </div>
+            <section id="advancedInputs" class="advanced-panel" hidden>
+              <div class="advanced-panel__header">
+                <div><p class="eyebrow">Advanced inputs</p><h3>Optional context</h3></div>
+                <p class="muted">These inputs are visible for scenario setup now and can be wired into later model expansion.</p>
+              </div>
+              <div class="form-grid form-grid--simulator">
+                <div class="field"><label for="offenseTimeouts">Offense timeouts</label><select id="offenseTimeouts" name="offenseTimeouts"><option value="3" selected>3</option><option value="2">2</option><option value="1">1</option><option value="0">0</option></select></div>
+                <div class="field"><label for="defenseTimeouts">Defense timeouts</label><select id="defenseTimeouts" name="defenseTimeouts"><option value="3" selected>3</option><option value="2">2</option><option value="1">1</option><option value="0">0</option></select></div>
+                <div class="field"><label for="pregameSpread">Pregame spread</label><input id="pregameSpread" name="pregameSpread" type="number" min="-30" max="30" step="0.5" value="-3"></div>
+                <div class="field"><label for="overUnder">Over / under</label><input id="overUnder" name="overUnder" type="number" min="20" max="90" step="0.5" value="52"></div>
+                <div class="field field--full"><label for="receivesSecondHalfKickoff">Receives second-half kickoff?</label><select id="receivesSecondHalfKickoff" name="receivesSecondHalfKickoff"><option value="yes" selected>Yes</option><option value="no">No</option></select></div>
+              </div>
+            </section>
+            <div class="button-row simulator-actions">
+              <button type="submit">Evaluate situation</button>
+              <button type="button" class="button-secondary" id="resetScenario">Reset defaults</button>
+            </div>
+          </form>
+        </section>
+        <aside class="result-panel simulator-panel simulator-panel--results">
+          <p class="eyebrow">Model output</p>
+          <h2>Recommendation</h2>
+          <div id="fourth-down-output"></div>
+        </aside>
+      </div>
+      <div class="shell footer-note">Advanced inputs are visible for future extension, but the current simulator still evaluates the core game-state variables only.</div>
+    </section>
+  </main>
+  <script src="./fourth-down-model.js"></script>
+  <script src="./fourth-down-page.js"></script>
+</body>
+</html>

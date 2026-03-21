@@ -1,164 +1,27 @@
-import { useMemo, useState } from "react";
-import {
-	defaultSimulatorInput,
-	evaluateFourthDownDecision,
-	formatFieldPosition,
-	formatScoreDifferential,
-	type SimulatorInput,
-} from "../utils/fourthDownModel";
-
 export function SimulatorPage() {
-	const [input, setInput] = useState<SimulatorInput>(defaultSimulatorInput);
-
-	const summary = useMemo(() => evaluateFourthDownDecision(input), [input]);
-
 	return (
 		<section className="section page-intro">
-			<div className="container simulator-layout">
+			<div className="container simulator-layout simulator-layout--embed">
 				<div className="section-heading simulator-heading">
 					<p className="eyebrow">4th Down Simulator</p>
 					<h1>Test the decision, not the convention.</h1>
 					<p>
-						This version uses a dense cfb4th-backed decision surface so the
-						recommendations track a much stronger benchmark while keeping the UI easy to use.
+						This page now embeds the current testing-focused simulator build with the same
+						controls, output structure, and model behavior used in the latest cross-site pass.
 					</p>
+					<div className="hero__actions">
+						<a className="button button--primary" href="/fourth-down-simulator/">
+							Open standalone version
+						</a>
+					</div>
 				</div>
 
-				<div className="simulator-grid">
-					<form className="simulator-card simulator-form">
-						<div className="field-grid">
-							<label>
-								<span>Yard line</span>
-								<input
-									type="number"
-									min="1"
-									max="99"
-									value={input.yardLine}
-									onChange={(event) =>
-										setInput((current) => ({
-											...current,
-											yardLine: Number(event.target.value),
-										}))
-									}
-								/>
-								<small>1 = own goal line, 99 = opponent 1</small>
-							</label>
-							<label>
-								<span>Yards to go</span>
-								<input
-									type="number"
-									min="1"
-									max="25"
-									value={input.yardsToGo}
-									onChange={(event) =>
-										setInput((current) => ({
-											...current,
-											yardsToGo: Number(event.target.value),
-										}))
-									}
-								/>
-							</label>
-							<label>
-								<span>Quarter</span>
-								<select
-									value={input.quarter}
-									onChange={(event) =>
-										setInput((current) => ({
-											...current,
-											quarter: Number(event.target.value),
-										}))
-									}
-								>
-									<option value="1">1st</option>
-									<option value="2">2nd</option>
-									<option value="3">3rd</option>
-									<option value="4">4th</option>
-								</select>
-							</label>
-							<label>
-								<span>Time remaining</span>
-								<input
-									type="text"
-									inputMode="numeric"
-									pattern="[0-9]{1,2}:[0-9]{2}"
-									value={input.timeRemaining}
-									onChange={(event) =>
-										setInput((current) => ({
-											...current,
-											timeRemaining: event.target.value,
-										}))
-									}
-								/>
-								<small>Format: MM:SS</small>
-							</label>
-							<label className="field-grid__full">
-								<span>Score differential</span>
-								<input
-									type="number"
-									min="-30"
-									max="30"
-									value={input.scoreDifferential}
-									onChange={(event) =>
-										setInput((current) => ({
-											...current,
-											scoreDifferential: Number(event.target.value),
-										}))
-									}
-								/>
-								<small>Positive if your team is leading</small>
-							</label>
-						</div>
-					</form>
-
-					<div className="simulator-card simulator-results">
-						<div className="recommendation">
-							<p className="eyebrow">Recommendation</p>
-							<h2>{summary.recommendation}</h2>
-							<p>{summary.explanation}</p>
-						</div>
-						<div className="decision-summary">
-							<div>
-								<span>Situation</span>
-								<strong>
-									{formatFieldPosition(summary.context.yardLine)}, 4th-and-
-									{summary.context.yardsToGo}
-								</strong>
-							</div>
-							<div>
-								<span>Game state</span>
-								<strong>
-									Q{summary.context.quarter}, {summary.context.timeRemaining},{" "}
-									{formatScoreDifferential(summary.context.scoreDifferential)}
-								</strong>
-							</div>
-							<div>
-								<span>Best win probability</span>
-								<strong>{Math.round(summary.bestWinProbability * 100)}%</strong>
-							</div>
-							<div>
-								<span>Estimated conversion rate</span>
-								<strong>{Math.round(summary.goForIt.conversionRate * 100)}%</strong>
-							</div>
-						</div>
-						<div className="option-table" aria-label="Decision summary">
-							<div>
-								<span>Go for it</span>
-								<strong>{Math.round((summary.goForIt.winProbability ?? 0) * 100)}%</strong>
-							</div>
-							<div>
-								<span>Punt</span>
-								<strong>{Math.round((summary.punt.winProbability ?? 0) * 100)}%</strong>
-							</div>
-							<div>
-								<span>Field goal</span>
-								<strong>{Math.round((summary.fieldGoal.winProbability ?? 0) * 100)}%</strong>
-							</div>
-						</div>
-						<p className="simulator-note">
-							The model now uses a dense cfb4th-backed benchmark surface and presents
-							win-probability comparisons directly so the recommendation stays easier to trust and inspect.
-						</p>
-					</div>
+				<div className="simulator-embed-card">
+					<iframe
+						title="Fourth Down Simulator"
+						src="/fourth-down-simulator/"
+						className="simulator-embed"
+					/>
 				</div>
 			</div>
 		</section>
