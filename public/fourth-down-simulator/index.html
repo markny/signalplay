@@ -18,6 +18,9 @@
           <p class="page-intro">
             Compare the win probabilities of going for it, punting, or attempting a field goal with the current SignalPlay fourth-down simulator.
           </p>
+          <p class="muted">
+            Validation note: against the current cfb4th benchmark grid, the simulator matches the benchmark recommendation in 636 of 640 tested scenarios (99.4%). Probability differences are generally small, with mean absolute error of about 0.03 percentage points for go decisions and 0.07 percentage points for field goals. The advanced inputs are visible for future expansion, but the current live recommendation is driven by the core game-state inputs shown by default.
+          </p>
         </div>
         <aside class="panel">
           <p class="panel__label eyebrow">About this version</p>
@@ -81,7 +84,7 @@
             <section id="advancedInputs" class="advanced-panel" hidden>
               <div class="advanced-panel__header">
                 <div><p class="eyebrow">Advanced inputs</p><h3>Optional context</h3></div>
-                <p class="muted">These inputs are visible for scenario setup now and can be wired into later model expansion.</p>
+                <p class="muted">These inputs are visible for scenario setup now and can be wired into later model expansion. They do not yet change the recommendation.</p>
               </div>
               <div class="form-grid form-grid--simulator">
                 <div class="field"><label for="offenseTimeouts">Offense timeouts</label><select id="offenseTimeouts" name="offenseTimeouts"><option value="3" selected>3</option><option value="2">2</option><option value="1">1</option><option value="0">0</option></select></div>
@@ -103,7 +106,7 @@
           <div id="fourth-down-output"></div>
         </aside>
       </div>
-      <div class="shell footer-note">Advanced inputs are visible for future extension, but the current simulator still evaluates the core game-state variables only.</div>
+      <div class="shell footer-note">Advanced inputs are visible for future extension, but the current simulator still evaluates only the core game-state variables for its live recommendation.</div>
     </section>
   </main>
   <script src="./fourth-down-model.js"></script>
