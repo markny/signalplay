@@ -62,12 +62,16 @@ input[type="range"] { padding:0; border:0; background:transparent; accent-color:
 .implication-panel { display:grid; gap:.9rem; margin-bottom:1rem; }
 .implication-panel__header { display:flex; justify-content:space-between; align-items:end; gap:1rem; padding:1rem 1.1rem; }
 .implication-panel__headline { font-size:1.55rem; display:block; }
+.implication-panel__baseline { margin-top:.45rem; margin-bottom:0; color: var(--text-soft); }
+.implication-panel__baseline strong { color: #f2f7f9; font-family:"Fraunces", serif; }
 .implication-panel__edge { text-align:right; }
 .implication-panel__edge strong { font-size:1.8rem; display:block; }
 .implication-row { padding:1rem 1.1rem; position:relative; }
 .implication-row--best { padding-top:3rem; border-color: rgba(133,212,209,.3); background: linear-gradient(180deg, rgba(133,212,209,.09), rgba(18,30,39,.92)); box-shadow:0 14px 30px rgba(133,212,209,.08); }
 .decision-badge { position:absolute; top:.9rem; right:1rem; display:inline-flex; align-items:center; padding:.3rem .65rem; border-radius:999px; background: rgba(133,212,209,.14); color: var(--accent); font-size:.78rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; }
 .implication-row__titleline { display:flex; justify-content:space-between; align-items:start; gap:1rem; margin-bottom:.9rem; }
+.implication-row__delta-group { display:flex; flex-direction:column; align-items:flex-end; gap:.25rem; }
+.implication-row__delta--baseline { color: var(--accent); }
 .implication-row__wp { display:block; font-size:2rem; line-height:1; }
 .implication-row__details { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.75rem; }
 .implication-stat { padding:.85rem .9rem; border-radius:14px; background: rgba(133,212,209,.05); }
